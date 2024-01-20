@@ -1,0 +1,39 @@
+<body onsubmit="configurarCampo()">
+<h1>produto</h1>
+<hr />
+
+<script>
+
+        var numero = 4;
+		
+		function configurarCampo() {
+        var campoCod = document.getElementsByName('cod')[0];
+        campoCod.value = numero;
+		}
+
+</script>
+
+
+<form method="post" action="/autenticar">
+    <div class="col">
+        <input type="text" name="cod" placeholder="cod">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Entrar</button>
+    </div>
+</form>
+
+
+<?php
+	
+	foreach($this->view->dados as $indice => $produto) {
+		echo $produto['id'] . '<br>' ;
+		echo $produto['nome']. '<br>' ;
+		echo $produto['preco']. '<br>' ;
+		echo "<hr>";
+	}
+
+?>
+
+
+</body>
