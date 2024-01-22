@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Miniframework</title>
+
+	</head>
+
+
+    <style>
+        body{
+            color: #fff;
+        }
+
+        .tabela{
+            position: relative;
+            background-color: #0b5004;
+            height: 130px;
+            width: 90%;
+            margin: auto;
+            border-radius: 20px;
+        }
+        .mensagem{
+            margin-top: -40px;
+            position: absolute;
+            width: 150px;
+            margin-left: 30px;
+            /* background-color: #de0000; */
+            background-color: #de0;
+        }
+        .infortext{
+
+        }
+        .numeracaocanteiro{
+            position: absolute;
+            background-color: #de0;
+            width: 50px;
+            height: 50px;
+            margin-top: 25px;
+            margin-left: 20px;
+            border-radius: 50%;
+        }
+        .numeracaocanteiro h3{
+            margin-top: 6%;
+        }
+        .texto{
+            margin-left: 60px;
+            padding: 15px;
+        }
+        .texto p{
+            position: relative;
+            margin-left: 10PX;
+        }
+
+
+
+    </style>
+
+	<body>
+
+
+    <?php foreach ($this->view->cod as $key => $valor) { ?>
+    <br>
+    <br>
+    <br>
+    <div class="tabela">
+        <div class="mensagem">
+            <h3 class="text-center"><?php echo $valor['produto']; ?></h3>
+        </div>
+        <div class="infortext">
+            <div class="numeracaocanteiro">
+                <h3 class="text-center"><?php echo $valor['canteiro']; ?></h3>
+            </div>
+            <div class="texto">
+                <p> COLETAR DIA <span id="resultado_<?php echo $key; ?>"></span>  </p>
+                <p> PESTICIDA <?php echo $valor['pesticida']; ?> FALTA <span id="falta_<?php echo $key; ?>"></span> DIAS </p>
+                <P> QUANTIDADE : <?php echo $valor['qtd']; ?></P>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+    <script>
+    var data_plantada_str_<?php echo $key; ?> = <?php echo json_encode($valor['dat']); ?>;
+    var tp_plantacao_<?php echo $key; ?> = <?php echo json_encode($valor['tp_plantacao']); ?>;
+    var carencia_<?php echo $key; ?> = <?php echo json_encode($valor['carencia']); ?>;
+
+    var dia_plantado_<?php echo $key; ?> = <?php echo (new DateTime($valor['dat']))->format('d'); ?>;
+
+    var hoje_<?php echo $key; ?> = new Date();
+    var dia_hoje_<?php echo $key; ?> = hoje_<?php echo $key; ?>.getDate();
+
+    var faltadias_<?php echo $key; ?> = ((dia_hoje_<?php echo $key; ?> - dia_plantado_<?php echo $key; ?>) - carencia_<?php echo $key; ?>);
+
+    // Converte a string da data para obter ano, mês e dia
+    var partesDataPlantada_<?php echo $key; ?> = data_plantada_str_<?php echo $key; ?>.split("-");
+    var ano_<?php echo $key; ?> = parseInt(partesDataPlantada_<?php echo $key; ?>[0]);
+    var mes_<?php echo $key; ?> = parseInt(partesDataPlantada_<?php echo $key; ?>[1]) - 1; // Mês começa do zero
+    var dia_<?php echo $key; ?> = parseInt(partesDataPlantada_<?php echo $key; ?>[2]);
+
+    // Converte a string da data plantada para um objeto Date
+    var data_plantada_<?php echo $key; ?> = new Date(ano_<?php echo $key; ?>, mes_<?php echo $key; ?>, dia_<?php echo $key; ?>);
+
+    // Adiciona o tempo de plantação à data plantada
+    data_plantada_<?php echo $key; ?>.setDate(data_plantada_<?php echo $key; ?>.getDate() + parseInt(tp_plantacao_<?php echo $key; ?>));
+
+    // Formata a data para exibir dia e mês
+    var diaFormatado_<?php echo $key; ?> = data_plantada_<?php echo $key; ?>.getDate();
+    var mesFormatado_<?php echo $key; ?> = data_plantada_<?php echo $key; ?>.toLocaleString('pt-BR', { month: 'short' });
+
+    // Concatena dia e mês
+    var resultadoFormatado_<?php echo $key; ?> = diaFormatado_<?php echo $key; ?> + ' ' + mesFormatado_<?php echo $key; ?>;
+
+    // Seleciona o elemento <span> e atribui o novo valor
+    document.getElementById('resultado_<?php echo $key; ?>').innerText = resultadoFormatado_<?php echo $key; ?>;
+    document.getElementById('falta_<?php echo $key; ?>').innerText = faltadias_<?php echo $key; ?>;
+</script>
+
+
+<?php } ?>
+
+          
+	</body>
+
+</html>

@@ -44,19 +44,6 @@ class Produto extends Model {
 	}
 
 
-    public function autenticar(){
-
-        $query = "SELECT id, nome, preco FROM produto WHERE id = :cod";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':cod', $this->__get('id'));
-        $stmt->execute();
-    
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
-
-    }
-
-
-
 
 
 

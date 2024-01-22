@@ -92,6 +92,24 @@ class CadastroController extends Action {
 		}
 	}
 
+	public function cd_plantacao(){
+		
+		$cadastro = Container::getModel('Cadastro');
+
+		$cadastro->__set('canteiro', $_POST['canteiro']);
+		$cadastro->__set('produto', $_POST['produto']);
+		$cadastro->__set('qtd', $_POST['qtd']);
+		$cadastro->__set('dat', $_POST['dat']);
+		$cadastro->__set('ml_usado', $_POST['ml_usado']);
+		$cadastro->__set('pesticida', $_POST['pesticida']);
+		$cadastro->__set('obs', $_POST['obs']);
+		$cadastro->__set('carencia', $_POST['carencia']);
+
+		$cadastro->salvar_plantacao();
+
+		$this->render('/cadastro_pesticida', $this->layout());
+	}
+
 
 
 }

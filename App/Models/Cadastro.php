@@ -6,8 +6,6 @@ use MF\Model\Model;
 
 class Cadastro extends Model {
 
-    private $pes;
-
 	private $id;
     private $numeracao;
 
@@ -17,6 +15,15 @@ class Cadastro extends Model {
     private $tp_plantacao;
 
     private $tipo_pesticida;
+
+    private $canteiro;
+    private $produto;
+    private $qtd;
+    private $dat;
+    private $ml_usado;
+    private $pesticida;
+    private $obs;
+    private $carencia;
 
     public function __get($atributo){
         return $this->$atributo;
@@ -64,6 +71,20 @@ class Cadastro extends Model {
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':tipo_pesticida', $this->__get('tipo_pesticida'));
         $stmt->bindValue(':nome', $this->__get('nome'));
+        $stmt->execute();
+    }
+    public function salvar_plantacao(){
+
+        $query = "INSERT INTO plantacao( canteiro, produto, qtd, dat, ml_usado, pesticida, obs, carencia) VALUES ( :canteiro, :produto, :qtd, :dat, :ml_usado, :pesticida, :obs, :carencia )";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':canteiro', $this->__get('canteiro'));
+        $stmt->bindValue(':produto', $this->__get('produto'));
+        $stmt->bindValue(':qtd', $this->__get('qtd'));
+        $stmt->bindValue(':dat', $this->__get('dat'));
+        $stmt->bindValue(':ml_usado', $this->__get('ml_usado'));
+        $stmt->bindValue(':pesticida', $this->__get('pesticida'));
+        $stmt->bindValue(':obs', $this->__get('obs'));
+        $stmt->bindValue(':carencia', $this->__get('carencia'));
         $stmt->execute();
     }
 

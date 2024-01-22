@@ -19,6 +19,19 @@ class IndexController extends Action {
 	}
 
 	public function index() {
+
+		$cod = Container::getModel('Pesquisa');
+
+		$resultado = $cod->pesquisaindex();
+
+		if ($resultado !== false) {
+			$c = $resultado;
+		} else {
+			$c = [];
+		}
+
+		$this->view->cod = $c;
+
 		$this->render('index', $this->layout());
 	}
 
@@ -37,31 +50,26 @@ class IndexController extends Action {
 		$this->render('plantacao', $this->layout());
 	}
 
+	public function pesquisa(){
+		$cod = Container::getModel('Pesquisa');
 
+		$cod->__set('numeracao', $_POST['cod']);
 
-
-
-
-
-	public function autenticar(){
-
-        $cod = Container::getModel('Pro');
-
-		$cod->__set('id', $_POST['cod']);
-
-		$resultado = $cod->autenticar();
+		$resultado = $cod->pesquisa();
 
 		if ($resultado !== false) {
 			$c = $resultado;
 		} else {
 			$c = [];
 		}
-		
-		$this->view->teste = $c;
 
-		$this->render('achou', $this->layout());
+		$this->view->cod = $c;
 
-    }
+		$this->render('pesquisa', $this->layout());
+	}
+
+
+
 
 }
 
