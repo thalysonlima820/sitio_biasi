@@ -1,0 +1,199 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Miniframework</title>
+
+	</head>
+
+
+    <style>
+
+        .tex{
+            background-color: #fff;
+            width: 90%;
+            height: 5%;
+            margin: auto;
+            padding: 5px;
+            border-radius: 20px;
+        }
+        .tex h1{
+            font-size: 4em;
+        }
+        .login{
+            background: rgba(0, 0, 0, .5);
+            border-radius: 10px;
+            width: 90%;
+            padding: 40px;
+            margin: 4%;
+        }
+        .login h2{
+            margin-bottom: 30px;
+            font-size: 30px;
+            color: #fff;
+            text-align: center;
+        }
+        .login .box_user{
+            position: relative;
+        }
+        .login .box_user input{
+            width: 100%;
+            padding: 10px 0;
+            outline: none;
+            border: 0;
+            background: transparent;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        .login .box_user label{
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 2.5em;
+            pointer-events: none;
+            transition: .5s;
+        }
+        .login .box_user input:focus~label,
+        .login .box_user input:valid~label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 1.5em;
+        }
+        .forget{
+            font-size: 1.5em;
+            color: #5b6b8b;
+            display: flex;
+            justify-content: end;
+        }
+        .btn{
+            position: relative;
+            display: inline-block;
+            padding: 12px 20px;
+            color:  #fff;
+            text-decoration: none;
+            font-size: 3em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: .5s;
+            overflow: hidden;
+            margin-left: 25%;
+            background-color:  #0b5004;
+        }
+        .btn:hover{
+            background-color:  #0b5004;
+            box-shadow: 3px 4px 62px  #0b5004;
+
+            border-radius: 5px;
+            color: #fff;
+        }
+        .btn span{
+            position: absolute;
+            display: block;
+        }
+        .btn span:nth-child(1){
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn1 1s linear infinite;
+        }
+
+
+       
+        @media(max-width: 405px){
+            .login{
+
+            width: 90%;
+
+        }
+        }
+
+
+        select{
+            margin: 3% 50%;
+            font-size: 2em;
+            background-color: transparent;
+        }
+        .dat{
+           
+            margin: 10% 0%;
+            background-color: transparent;
+        }
+
+        .t{
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .nu{
+            display: none;
+        }
+
+
+
+
+    </style>
+
+	<body>
+
+
+       
+<br><br>
+
+
+
+
+    <div class="text-center tex">
+            <h1 >IRRIGAÇÃO</h1>
+        </div>
+      
+        <form action="/irrigacao_concluida?id=<?php echo $this->view->id ?>&canteiro=<?php echo $this->view->canteiro ?>" method="post" class="login">
+
+            <div class="box_user">
+
+                <select name="pesticida" id="">
+                    <option value=""></option>
+                        <?php foreach($this->view->pesticida as $key => $valor ) { ?>
+
+                        <option value="<?php echo $valor['nome'] ?>"><?php echo $valor['nome']  ?></option>
+
+                        <?php } ?>
+                </select>
+                <label for="">PESTICIDA:</label>
+
+            </div>
+            
+            <div class="box_user">
+                <input class="dat" type="date" name="dat_atu" required>
+                <label for="">DIA DA IRRIGAÇÃO:</label>
+            </div>
+
+            <div class="box_user">
+                <input type="number" name="ml_usado" required>
+                <label for="">ML USADO:</label>
+            </div>
+            <div class="box_user">
+                <input type="number" name="carencia" required>
+                <label for="">CARÊNCIA:</label>
+            </div>
+
+
+            <div class="box_user ">
+                <input type="number" name="tempo_irrigacao" required>
+                <label for="">TEMPO DA IRRIGAÇÃO</label>
+            </div>
+            <button type="submit" class="btn">CONCLUIR</button>
+        </form>
+
+
+
+        
+	</body>
+
+</html>

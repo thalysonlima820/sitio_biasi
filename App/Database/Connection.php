@@ -12,9 +12,9 @@ class Connection {
 		try {
 
 			$conn = new \PDO(
-				"mysql:host=viaduct.proxy.rlwy.net;dbname=railway",
+				"mysql:host=localhost;dbname=pc_biasi_sitio",
 				"root",
-				"FGf-c31DGd-Bg2c3BbeA1H-5A35CcAeg" 
+				"" 
 			);
 
 			return $conn;
@@ -25,6 +25,4 @@ class Connection {
 	}
 }
 
-?>   
-
-
+?>

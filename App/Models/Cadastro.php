@@ -24,6 +24,10 @@ class Cadastro extends Model {
     private $pesticida;
     private $obs;
     private $carencia;
+    private $dat_atu;
+    private $numero_canterio;
+    private $tempo_irrigacao;
+    private $id_canteiro;
 
     public function __get($atributo){
         return $this->$atributo;
@@ -75,7 +79,7 @@ class Cadastro extends Model {
     }
     public function salvar_plantacao(){
 
-        $query = "INSERT INTO plantacao( canteiro, produto, qtd, dat, ml_usado, pesticida, obs, carencia) VALUES ( :canteiro, :produto, :qtd, :dat, :ml_usado, :pesticida, :obs, :carencia )";
+        $query = "INSERT INTO plantacao( canteiro, produto, qtd, dat, ml_usado, pesticida, obs, carencia, data_atu) VALUES ( :canteiro, :produto, :qtd, :dat, :ml_usado, :pesticida, :obs, :carencia, :data_atu )";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':canteiro', $this->__get('canteiro'));
         $stmt->bindValue(':produto', $this->__get('produto'));
@@ -85,9 +89,36 @@ class Cadastro extends Model {
         $stmt->bindValue(':pesticida', $this->__get('pesticida'));
         $stmt->bindValue(':obs', $this->__get('obs'));
         $stmt->bindValue(':carencia', $this->__get('carencia'));
+        $stmt->bindValue(':data_atu', $this->__get('dat'));
         $stmt->execute();
     }
 
+    public function atualizar_pes(){
+        $query = "update plantacao set pesticida = :pesticida, data_atu = :dat_atu, ml_usado = :ml_usado,
+         carencia = :carencia
+        where id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':pesticida', $this->__get('pesticida'));
+        $stmt->bindValue(':dat_atu', $this->__get('dat_atu'));
+        $stmt->bindValue(':ml_usado', $this->__get('ml_usado'));
+        $stmt->bindValue(':carencia', $this->__get('carencia'));
+        $stmt->bindValue(':id', $this->__get('id'));
+
+        $stmt->execute();
+        
+    }
+    public function irrigacao(){
+        $query = "INSERT INTO historico_irrigacao( data, tempo_regacao, numero_canterio, id_canteiro, pesticida, ml_usado, carencia ) VALUES ( :data, :tempo_regacao, :numero_canterio, :id_canteiro, :pesticida, :ml_usado, :carencia )";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':data', $this->__get('dat_atu'));
+        $stmt->bindValue(':tempo_regacao', $this->__get('tempo_irrigacao'));
+        $stmt->bindValue(':numero_canterio', $this->__get('numero_canterio'));
+        $stmt->bindValue(':id_canteiro', $this->__get('id_canteiro'));
+        $stmt->bindValue(':pesticida', $this->__get('pesticida'));
+        $stmt->bindValue(':ml_usado', $this->__get('ml_usado'));
+        $stmt->bindValue(':carencia', $this->__get('carencia'));
+        $stmt->execute();
+    }
 
 
 

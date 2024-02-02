@@ -110,6 +110,61 @@ class CadastroController extends Action {
 		$this->render('/cadastro_pesticida', $this->layout());
 	}
 
+	public function regacao(){
+
+		$pesquisa = Container::getModel('Pesquisa');
+
+		$resultadosPesticida = $pesquisa->pesquisapesticida();
+
+
+		$id = isset($_GET['id']) ? $_GET['id'] : null;
+		$canteiros = isset($_GET['canteiro']) ? $_GET['canteiro'] : null;
+
+		if ($canteiros !== null) {
+			// O índice 'canteiro' está definido, você pode usar $canteiros aqui
+			$this->view->canteiro = $canteiros;
+		} else {
+			// O índice 'canteiro' não está definido, lide com isso conforme necessário
+			$this->view->canteiro = 'Valor padrão'; // ou null ou qualquer valor padrão desejado
+		}
+
+		$this->view->id = $id;
+		$this->view->pesticida = $resultadosPesticida;
+
+		$this->view->pesticida = $resultadosPesticida;
+
+		$this->render('/regacao', $this->layout());
+	}
+
+	public function irrigacao_concluida(){
+
+
+		$atualizar_pesticida = Container::getModel('Cadastro');
+		$irrigacao = Container::getModel('Cadastro');
+
+		$atualizar_pesticida->__set('pesticida', $_POST['pesticida']);
+		$atualizar_pesticida->__set('dat_atu', $_POST['dat_atu']);
+		$atualizar_pesticida->__set('ml_usado', $_POST['ml_usado']);
+		$atualizar_pesticida->__set('carencia', $_POST['carencia']);
+		$atualizar_pesticida->__set('id', $_GET['id']);
+
+
+		$irrigacao->__set('tempo_irrigacao', $_POST['tempo_irrigacao']);
+		$irrigacao->__set('dat_atu', $_POST['dat_atu']);
+		$irrigacao->__set('numero_canterio', $_GET['canteiro']);
+
+		$irrigacao->__set('id_canteiro',  $_GET['id']);
+		$irrigacao->__set('pesticida', $_POST['pesticida']);
+		$irrigacao->__set('ml_usado', $_POST['ml_usado']);
+		$irrigacao->__set('carencia', $_POST['carencia']);
+
+		$atualizar_pesticida->atualizar_pes();
+		$irrigacao->irrigacao();
+
+
+		$this->render('/cadastro_produto', $this->layout());
+	}
+
 
 
 }

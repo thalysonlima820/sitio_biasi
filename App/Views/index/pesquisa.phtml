@@ -14,11 +14,39 @@
         .tabela{
             position: relative;
             background-color: #0b5004;
-            height: 130px;
+            height: 15%;
             width: 90%;
             margin: auto;
             border-radius: 20px;
         }
+        .numeracaocanteiro{
+            position: absolute;
+            background-color: #de0;
+            width: 150px;
+            height: 150px;
+            margin-top: 6%;
+            margin-left: 20px;
+            border-radius: 50%;
+        }
+        .numeracaocanteiro h1{
+            margin-top: 6%;
+            font-size: 5em;
+        }
+        .texto{
+            margin-left: 20%;
+            padding: 15px;
+        }
+        .texto p{
+            position: relative;
+            margin-left: 10PX;
+            font-size: 2.5em;
+            color: #fff;
+        }
+        .texto .pri {
+            margin-top: 6%;
+        }
+
+
         .mensagem{
             margin-top: -40px;
             position: absolute;
@@ -27,29 +55,8 @@
             /* background-color: #de0000; */
             background-color: #de0;
         }
-        .infortext{
 
-        }
-        .numeracaocanteiro{
-            position: absolute;
-            background-color: #de0;
-            width: 50px;
-            height: 50px;
-            margin-top: 25px;
-            margin-left: 20px;
-            border-radius: 50%;
-        }
-        .numeracaocanteiro h3{
-            margin-top: 6%;
-        }
-        .texto{
-            margin-left: 60px;
-            padding: 15px;
-        }
-        .texto p{
-            position: relative;
-            margin-left: 10PX;
-        }
+
 
 
 
@@ -64,18 +71,24 @@
     <br>
     <div class="tabela">
         <div class="mensagem">
-            <h3 class="text-center"><?php echo $valor['produto']; ?></h3>
+            <h1 class="text-center"><?php echo $valor['produto']; ?></h1>
         </div>
         <div class="infortext">
             <div class="numeracaocanteiro">
-                <h3 class="text-center"><?php echo $valor['canteiro']; ?></h3>
+                <h1 class="text-center"><?php echo $valor['canteiro']; ?></h1>
             </div>
             <div class="texto">
+            <a href="/regacao?id=<?php echo $valor['id']; ?>&canteiro=<?php echo $valor['canteiro']; ?>">
                 <p> COLETAR DIA <span id="resultado_<?php echo $key; ?>"></span>  </p>
-                <p> PESTICIDA <?php echo $valor['pesticida']; ?> FALTA <span id="falta_<?php echo $key; ?>"></span> DIAS </p>
+                <p> PESTICIDA <?php echo $valor['pesticida']; ?> FALTA <span id="falta_<?php echo $key; ?>"></span> </p>
                 <P> QUANTIDADE : <?php echo $valor['qtd']; ?></P>
+            </a>
             </div>
         </div>
+        
+
+        
+
     </div>
     <br>
 
@@ -84,13 +97,19 @@
     var data_plantada_str_<?php echo $key; ?> = <?php echo json_encode($valor['dat']); ?>;
     var tp_plantacao_<?php echo $key; ?> = <?php echo json_encode($valor['tp_plantacao']); ?>;
     var carencia_<?php echo $key; ?> = <?php echo json_encode($valor['carencia']); ?>;
+    
 
-    var dia_plantado_<?php echo $key; ?> = <?php echo (new DateTime($valor['dat']))->format('d'); ?>;
 
-    var hoje_<?php echo $key; ?> = new Date();
-    var dia_hoje_<?php echo $key; ?> = hoje_<?php echo $key; ?>.getDate();
+    var dia_plantado_<?php echo $key; ?> = <?php echo (new DateTime($valor['data_atu']))->format('d'); ?>;
+var carencia_<?php echo $key; ?> = <?php echo $valor['carencia']; ?>;
 
-    var faltadias_<?php echo $key; ?> = ((dia_hoje_<?php echo $key; ?> - dia_plantado_<?php echo $key; ?>) - carencia_<?php echo $key; ?>);
+var hoje_<?php echo $key; ?> = new Date();
+var dia_hoje_<?php echo $key; ?> = hoje_<?php echo $key; ?>.getDate();
+
+var faltadias_<?php echo $key; ?> = parseInt(dia_plantado_<?php echo $key; ?>) + parseInt(carencia_<?php echo $key; ?>) - dia_hoje_<?php echo $key; ?>;
+
+
+
 
     // Converte a string da data para obter ano, mês e dia
     var partesDataPlantada_<?php echo $key; ?> = data_plantada_str_<?php echo $key; ?>.split("-");

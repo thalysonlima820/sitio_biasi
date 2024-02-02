@@ -58,6 +58,17 @@ class Route extends Bootstrap {
 			'controller' => 'indexController',
 			'action' => 'pesquisa'
 		);
+		$routes['regacao'] = array(
+			'route' => '/regacao',
+			'controller' => 'CadastroController',
+			'action' => 'regacao'
+		);
+		$routes['irrigacao_concluida'] = array(
+			'route' => '/irrigacao_concluida',
+			'controller' => 'CadastroController',
+			'action' => 'irrigacao_concluida'
+		);
+		
 
 		$this->setRoutes($routes);
 	}
