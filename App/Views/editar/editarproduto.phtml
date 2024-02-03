@@ -126,25 +126,38 @@
 	<body>
 
 
+
         <!-- PARTE 2 -->
         <br>
       
         <div class="text-center tex">
-            <a href="listacanteiro"><h1>CADASTRAR CANTEIRO</h1></a>
+            <a href="/listaproduto"><h1>CADASTRAR PRODUTO</h1></a>
         </div>
       
-        <form action="/cd_canteiro" method="post" class="login">
-
-            <div class="box_user">
-                <input type="number" name="numeracao" required>
-                <label for="">NUMERAÇÃO:</label>
-            </div>
-            <button type="submit" class="btn">CADASTRAR</button>
-            <?php if (isset($this->view->erro) && $this->view->erro) { ?>
-    <small class="form-text text-danger">JÁ EXISTE CADASTRO</small>
-<?php } ?>
-
-        </form>
+        <?php foreach( $this->view->valor as $key => $valor){ ?>
+            <form action="/salvarediproduto?id=<?php echo $valor['id'] ?>" method="post" class="login">
+                <div class="box_user">
+                    <input type="text" name="nome" value="<?php echo $valor['nome'] ?>" required>
+                    <label for="">NOME:</label>
+                </div>
+                <div class="box_user">
+                    <input type="number" name="custo" value="<?php echo $valor['custo'] ?>" required>
+                    <label for="">CUSTO:</label>
+                </div>
+                <div class="box_user">
+                    <input type="number" name="vl_venda" value="<?php echo $valor['vl_venda'] ?>" required>
+                    <label for="">VL VENDA:</label>
+                </div>
+                <div class="box_user">
+                    <input type="number" name="tp_plantacao" value="<?php echo $valor['tp_plantacao'] ?>" required>
+                    <label for="">TP PLANTAÇÃO</label>
+                </div>
+                <button type="submit" class="btn">CADASTRAR</button>
+                <?php if (isset($this->view->erro) && $this->view->erro) { ?>
+                <small class="form-text text-danger">JÁ EXISTE CADASTRO</small>
+                <?php } ?>
+            </form>
+        <?php } ?>
 
         
 	</body>

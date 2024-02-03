@@ -8,13 +8,13 @@
 
     <style>
 
-
 .tex{
             background-color: #fff;
             width: 90%;
             height: 5%;
             margin: auto;
             padding: 5px;
+
             border-radius: 20px;
         }
         .tex h1{
@@ -118,6 +118,12 @@
         }
 
 
+        select{
+            margin: 3% 50%;
+            font-size: 2em;
+            background-color: transparent;
+        }
+
 
 
 
@@ -126,25 +132,34 @@
 	<body>
 
 
+
         <!-- PARTE 2 -->
         <br>
       
         <div class="text-center tex">
-            <a href="listacanteiro"><h1>CADASTRAR CANTEIRO</h1></a>
+            <a href="/listaproduto"><h1>CADASTRAR PESTICIDA</h1></a>
         </div>
       
-        <form action="/cd_canteiro" method="post" class="login">
-
+        <?php foreach( $this->view->valor as $key => $valor){ ?>
+            <form action="/salvaredipesticida?id=<?php echo $valor['id'] ?>" method="post" class="login">
             <div class="box_user">
-                <input type="number" name="numeracao" required>
-                <label for="">NUMERAÇÃO:</label>
+                <select name="tipo_pesticida" id="">
+                    <option value="<?php echo $valor['tipo_pesticida'] ?>"><?php echo $valor['tipo_pesticida'] ?></option>
+                    <option value="FUNGICIDA">FUNGICIDA</option>
+                    <option value="INSETICIDA">INSETICIDA</option>
+                </select>
+                <label for="">PERTICIDA:</label>
+            </div>
+            <div class="box_user">
+                <input type="text" name="nome" value="<?php echo $valor['nome'] ?>" required>
+                <label for="">NOME:</label>
             </div>
             <button type="submit" class="btn">CADASTRAR</button>
             <?php if (isset($this->view->erro) && $this->view->erro) { ?>
-    <small class="form-text text-danger">JÁ EXISTE CADASTRO</small>
-<?php } ?>
-
+                <small class="form-text text-danger">JÁ EXISTE CADASTRO</small>
+            <?php } ?>
         </form>
+        <?php } ?>
 
         
 	</body>

@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Miniframework</title>
+
+	</head>
+
+
+    <style>
+
+        .tex{
+            background-color: #fff;
+            width: 90%;
+            height: 5%;
+            margin: auto;
+            padding: 5px;
+            border-radius: 20px;
+            position: relative;
+        }
+        .tex h1{
+           
+            font-size: 4em;
+        }
+        .lista{
+            color: #fff;
+            padding: 40px;
+            margin: 4%;
+            position: relative;
+
+            display: flex;
+        }
+        .lis{
+            display: flex;
+            margin-left: -10px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 0 10px 10px 0;
+            background: rgba(0, 0, 0, .5);
+        }
+       
+        .cod{
+            z-index: 90;
+            padding: 40px;
+            border-radius: 20px;
+            background-color: #de0000;
+            
+        }
+        .edit{
+            font-size: 4em;
+            position: absolute;
+            margin-left: 7%;
+            color: #fff;
+        }
+        .delete{
+            font-size: 4em;
+            position: absolute;
+            color: #fff;
+            margin-left: 20%;
+        }
+        .nome{
+            margin-left: 10%;
+        }
+        .dias{
+            margin-left: 10%;
+        }
+
+    </style>
+
+	<body>
+        <br>
+        <div class="text-center tex">
+            <h1 >LISTA PRODUTOS</h1>
+        </div>
+      
+
+    <?php foreach ($this->view->produto as $key => $valor) : ?>
+        <div class="lista">
+            <div class="cod">
+                <h1><?php echo $valor['id']; ?></h1>
+            </div>
+            <div class="lis">
+                <h1 class="nome"><?php echo $valor['nome']; ?></h1>
+                <h1 class="dias"><?php echo $valor['tp_plantacao']; ?> DIAS</h1>
+
+                <a href="/editarproduto?id=<?php echo $valor['id'] ?>"><ion-icon class="edit" name="create-outline"></ion-icon></a>
+                <a href="/deletar?id=<?php echo htmlspecialchars($valor['id']); ?>&tabela=produto">
+                    <ion-icon class="delete" name="trash-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+        
+	</body>
+
+</html>

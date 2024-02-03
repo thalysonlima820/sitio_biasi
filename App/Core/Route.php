@@ -68,6 +68,59 @@ class Route extends Bootstrap {
 			'controller' => 'CadastroController',
 			'action' => 'irrigacao_concluida'
 		);
+
+		$routes['listaproduto'] = array(
+			'route' => '/listaproduto',
+			'controller' => 'EditarController',
+			'action' => 'listaproduto'
+		);
+		$routes['listapesticida'] = array(
+			'route' => '/listapesticida',
+			'controller' => 'EditarController',
+			'action' => 'listapesticida'
+		);
+		$routes['listacanteiro'] = array(
+			'route' => '/listacanteiro',
+			'controller' => 'EditarController',
+			'action' => 'listacanteiro'
+		);
+		$routes['editarproduto'] = array(
+			'route' => '/editarproduto',
+			'controller' => 'EditarController',
+			'action' => 'editarproduto'
+		);
+		$routes['editarpesticida'] = array(
+			'route' => '/editarpesticida',
+			'controller' => 'EditarController',
+			'action' => 'editarpesticida'
+		);
+		$routes['editarcanteiro'] = array(
+			'route' => '/editarcanteiro',
+			'controller' => 'EditarController',
+			'action' => 'editarcanteiro'
+		);
+		$routes['salvarediproduto'] = array(
+			'route' => '/salvarediproduto',
+			'controller' => 'EditarController',
+			'action' => 'salvarediproduto'
+		);
+		$routes['salvaredipesticida'] = array(
+			'route' => '/salvaredipesticida',
+			'controller' => 'EditarController',
+			'action' => 'salvaredipesticida'
+		);
+		$routes['salvaredicanteiro'] = array(
+			'route' => '/salvaredicanteiro',
+			'controller' => 'EditarController',
+			'action' => 'salvaredicanteiro'
+		);
+
+
+		$routes['deletar'] = array(
+			'route' => '/deletar',
+			'controller' => 'EditarController',
+			'action' => 'deletar'
+		);
 		
 
 		$this->setRoutes($routes);
