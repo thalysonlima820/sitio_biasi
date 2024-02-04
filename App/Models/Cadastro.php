@@ -29,6 +29,9 @@ class Cadastro extends Model {
     private $tempo_irrigacao;
     private $id_canteiro;
 
+    private $qtd_coleta;
+    private $data_coleta;
+
     public function __get($atributo){
         return $this->$atributo;
     }
@@ -95,7 +98,7 @@ class Cadastro extends Model {
 
     public function atualizar_pes(){
         $query = "update plantacao set pesticida = :pesticida, data_atu = :dat_atu, ml_usado = :ml_usado,
-         carencia = :carencia
+         carencia = :carencia, fix = 0
         where id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':pesticida', $this->__get('pesticida'));
@@ -118,6 +121,41 @@ class Cadastro extends Model {
         $stmt->bindValue(':ml_usado', $this->__get('ml_usado'));
         $stmt->bindValue(':carencia', $this->__get('carencia'));
         $stmt->execute();
+    }
+
+
+    public function cadastrarcoleta(){
+        $query = "INSERT INTO coleta( produto, qtd, data_coleta, qtd_coleta, canteiro ) 
+        VALUES ( :produto, :qtd, :data_coleta, :qtd_coleta, :canteiro )";
+    
+        $stmt = $this->db->prepare($query);
+    
+        // Verificar se os dados estão definidos antes de acessá-los
+        if ($this->__get('canteiro') && $this->__get('produto') && $this->__get('qtd') && $this->__get('data_coleta') && $this->__get('qtd_coleta')) {
+            $stmt->bindValue(':canteiro', $this->__get('canteiro'));
+            $stmt->bindValue(':produto', $this->__get('produto'));
+            $stmt->bindValue(':qtd', $this->__get('qtd'));
+            $stmt->bindValue(':data_coleta', $this->__get('data_coleta'));
+            $stmt->bindValue(':qtd_coleta', $this->__get('qtd_coleta'));
+            $stmt->execute();
+        } else {
+            // Adicione uma lógica aqui para lidar com o caso em que os dados não estão definidos
+            echo "Erro: Dados de entrada ausentes.";
+        }
+    }
+    
+    public function mudarfi(){
+        $query = "UPDATE plantacao SET fix = 3 WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+    
+        // Verificar se o ID está definido antes de acessá-lo
+        if ($this->__get('id')) {
+            $stmt->bindValue(':id', $this->__get('id'));
+            $stmt->execute();
+        } else {
+            // Adicione uma lógica aqui para lidar com o caso em que o ID não está definido
+            echo "Erro: ID ausente.";
+        }
     }
 
 

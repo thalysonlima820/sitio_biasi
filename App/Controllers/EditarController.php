@@ -136,6 +136,15 @@ class EditarController extends Action {
 
         $this->render('/', $this->layout());
     }
+    public function fechar(){
+        $documentos = Container::getModel('Editar');
+
+        $documentos->__set('id', $_GET['id']);
+
+        $documentos->fechar();
+
+        $this->render('/', $this->layout());
+    }
 
 
 }

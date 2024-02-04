@@ -29,7 +29,8 @@
             border-radius: 50%;
         }
         .numeracaocanteiro h1{
-            margin-top: 6%;
+            margin-top: 10%;
+            color: #fff;
             font-size: 5em;
         }
         .texto{
@@ -75,7 +76,7 @@
         </div>
         <div class="infortext">
             <div class="numeracaocanteiro">
-                <h1 class="text-center"><?php echo $valor['canteiro']; ?></h1>
+            <a href="/coletar?id=<?php echo $valor['id'] ?>"><h1 class="text-center"><?php echo $valor['canteiro']; ?></h1></a>
             </div>
             <div class="texto">
             <a href="/regacao?id=<?php echo $valor['id']; ?>&canteiro=<?php echo $valor['canteiro']; ?>">

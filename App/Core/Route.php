@@ -114,12 +114,26 @@ class Route extends Bootstrap {
 			'controller' => 'EditarController',
 			'action' => 'salvaredicanteiro'
 		);
-
-
 		$routes['deletar'] = array(
 			'route' => '/deletar',
 			'controller' => 'EditarController',
 			'action' => 'deletar'
+		);
+		
+		$routes['fechar'] = array(
+			'route' => '/fechar',
+			'controller' => 'EditarController',
+			'action' => 'fechar'
+		);
+		$routes['coletar'] = array(
+			'route' => '/coletar',
+			'controller' => 'ColetarController',
+			'action' => 'coletar'
+		);
+		$routes['cadastrarcoleta'] = array(
+			'route' => '/cadastrarcoleta',
+			'controller' => 'ColetarController',
+			'action' => 'cadastrarcoleta'
 		);
 		
 

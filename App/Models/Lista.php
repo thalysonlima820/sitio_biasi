@@ -37,6 +37,13 @@ class Lista extends Model {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public function pesplantacao(){
+        $query = "select * from plantacao where id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 
 
 

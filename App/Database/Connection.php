@@ -11,11 +11,14 @@ class Connection {
 		
 		try {
 
+
+
 			$conn = new \PDO(
 				"mysql:host=localhost;dbname=pc_biasi_sitio",
 				"root",
 				"" 
 			);
+
 
 			return $conn;
 

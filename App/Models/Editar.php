@@ -60,6 +60,13 @@ class Editar extends Model {
         $stmt->execute();
 
     }
+    public function fechar(){
+        $query = "update plantacao set fix = 1 where id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
+
+    }
 
 
 

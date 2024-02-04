@@ -29,7 +29,8 @@ class Pesquisa extends Model {
         $query = "SELECT 
         pl.data_atu, pl.id, pl.canteiro, pl.produto, pl.qtd, pl.dat , pl.ml_usado, pl.pesticida, pl.obs, pl.carencia, pr.tp_plantacao
     FROM plantacao pl, produto pr WHERE pl.produto = pr.nome
-    and pl.canteiro = :numeracao";
+    and pl.canteiro = :numeracao
+    AND pl.fix = 1 or pl.fix = 0";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':numeracao', $this->__get('numeracao'));
         $stmt->execute();
@@ -42,23 +43,28 @@ class Pesquisa extends Model {
 
         $query = "SELECT 
         pl.id,
-            pl.dat,
-            pl.canteiro, 
-            pl.produto, 
-            pl.qtd, 
-            pl.ml_usado, 
-            pl.pesticida, 
-            pl.obs, 
-            pl.carencia, 
-            pr.tp_plantacao,
-            pl.data_atu
-        FROM 
-            plantacao pl
-        JOIN 
-            produto pr ON pl.produto = pr.nome
-        WHERE 
+        pl.dat,
+        pl.canteiro, 
+        pl.produto, 
+        pl.qtd, 
+        pl.ml_usado, 
+        pl.pesticida, 
+        pl.obs, 
+        pl.carencia, 
+        pr.tp_plantacao,
+        pl.data_atu,
+        pl.fix
+    FROM 
+        plantacao pl
+    JOIN 
+        produto pr ON pl.produto = pr.nome
+    WHERE 
+        pl.fix = 0
+        AND (
             DATE_ADD(pl.dat, INTERVAL pr.tp_plantacao DAY) <= CURDATE() 
-            or DATE_ADD(pl.data_atu, INTERVAL pl.carencia DAY) <= CURDATE();
+            OR DATE_ADD(pl.data_atu, INTERVAL pl.carencia DAY) <= CURDATE()
+        );
+    
         ";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
