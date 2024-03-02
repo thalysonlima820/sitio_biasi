@@ -182,7 +182,7 @@
 
     </style>
 
-	<body>
+	<body onLoad="carregarDados()" id="pri">
 
         <br>
         <form action="/pesquisa" method="post">
@@ -200,33 +200,32 @@
             </div>
         </form>
 
-                        
+		<!-- script -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+            <script src="../script.js"></script>
         <!-- BOTOES -->
-        <div class="botoes">   
-			<a href="cadastro_produto">                    
-                <div class=" bt cadastro_botao">
+        <div class="botoes">                 
+                <div id="cadastro_produto" class=" bt cadastro_botao">
                     <img class="icon" src="img/1.png" alt="">
                     <h4 class="text-center">CADASTRO PRODUTO</h4>
                 </div>
-			</a> 
-			<a href="cadastro_pesticida"> 
-                <div class=" bt cadastro_pesticida">
+
+                <div id="cadastro_pesticida" class=" bt cadastro_pesticida">
                     <img class="icon" src="img/1.png" alt="">
                     <h4 class="text-center">CADASTRO PESTICIDA</h4>
                 </div>
-			</a> 
-			<a href="plantacao"> 
-                <div class=" bt plantacao">
+
+                <div id="plantacao" class=" bt plantacao">
                     <img class="icon" src="img/2.png" alt="">
                     <h4 class="text-center">PLANTAÇÃO</h4>
                 </div>
-			</a> 
-			<a href="cadastro_canteiro"> 
-                <div class=" bt cadastro_canteiro">
+
+                <div id="cadastro_canteiro" class=" bt cadastro_canteiro">
                     <img class="icon" src="img/1.png" alt="">
                     <h4 class="text-center">CADASTRO CANTEIRO</h4>
                 </div>
-			</a> 
+
         </div>
 
         <!-- ALERTA -->
@@ -243,11 +242,12 @@
         <?php foreach ($this->view->cod as $key => $valor) { ?>
 
     <br>
-    <div class="tabela">
-        <a class="fechar" href="/fechar?id=<?php echo $valor['id'] ?>">X</a>
+
+    <!-- <div class="ta" id="ta"> -->
+    <a class="fechar" data-id="<?php echo $valor['id']; ?>">X</a>
         <div class="infortext">
             <div class="numeracaocanteiro">
-                <a href="/coletar?id=<?php echo $valor['id'] ?>"><h1 class="text-center"><?php echo $valor['canteiro']; ?></h1></a>
+                <a href="/coletar?id=<?php echo $valor['id'] ?>"><h1  id="canterioo" class="text-center"><?php echo $valor['canteiro']; ?></h1></a>
             </div>
             <div class="texto">
             <a href="/regacao?id=<?php echo $valor['id']; ?>&canteiro=<?php echo $valor['canteiro']; ?>">
@@ -255,9 +255,90 @@
                 <p> PESTICIDA VENCE NO DIA <span id="falta_<?php echo $key; ?>"></span> </p>
             </a>
             </div>
-        </div>
+
+    </div>
     </div>
     <br>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+
+        function carregarDados() {
+
+
+            $.ajax({
+            type: 'GET',
+            url: '/fechar',
+            data: `id=0`,
+            dataType: 'json',
+            success: response => { 
+
+                if (response.status === 'success') {
+                    var dados = response.data;
+
+                    $('.ta').html(''); // Limpa o conteúdo atual
+
+                    dados.forEach(function(item) {
+
+                        console.log(item)
+
+
+                        var html = `
+                        <br>
+                        <div class="tabela" id="tabelaPlantacao">
+                                <a class="fechar" data-id="${item.id}">X</a>
+                                <div class="infortext">
+                                    <div class="numeracaocanteiro">
+                                        <a href="/coletar?id=${item.id}"><h1 class="text-center">${item.canteiro}</h1></a>
+                                    </div>
+                                    <div class="texto">
+                                        <a href="/regacao?id=${item.id}&canteiro=${item.canteiro}">
+                                            <p class="pri"> COLETAR DIA <span id="resultado_${item.id}"></span>  </p>
+                                            <p> PESTICIDA VENCE NO DIA <span id="falta_${item.id}"></span> </p>
+                                        </a>
+                                    </div>
+                                </div>
+                                </div>
+                            <br> <br> 
+                        `;
+
+                        $('#ta').append(html);
+                    });
+                } else { console.error('Erro: ' + response.message)}},
+                error: erro => { console.log(erro); }
+            });
+
+        }
+
+        //click
+
+        $('.fechar').on('click', function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+
+
+            $.ajax({
+            type: 'GET',
+            url: '/fechar',
+            data: `id=${id}`,
+            dataType: 'json',
+            success: response => { 
+
+                console.log('certo')
+                // location.reload();
+                carregarDados();
+           
+                
+           },
+            error: erro => { console.log(erro); }
+            });
+        });
+
+
+
+
+    </script>
 
 
     <script>

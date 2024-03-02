@@ -127,24 +127,54 @@ class EditarController extends Action {
     }
 
     public function deletar(){
-        $documentos = Container::getModel('Editar');
-
-        $documentos->__set('id', $_GET['id']);
-        $documentos->__set('tabela', $_GET['tabela']);
-
-        $documentos->deletar();
-
-        $this->render('/', $this->layout());
+        try {
+            $documentos = Container::getModel('Editar');
+    
+            $documentos->__set('id', $_GET['id']);
+            $documentos->__set('tabela', $_GET['tabela']);
+    
+            $documentos->deletar();
+    
+            echo json_encode(['status' => 'success', 'message' => 'Registro deletado com sucesso']);
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Falha ao deletar o registro: ' . $e->getMessage()]);
+        }
     }
-    public function fechar(){
-        $documentos = Container::getModel('Editar');
-
-        $documentos->__set('id', $_GET['id']);
-
-        $documentos->fechar();
-
-        $this->render('/', $this->layout());
+    
+    public function fechar() {
+        $response = ['status' => 'error', 'message' => 'Ocorreu um erro.'];
+    
+        if (isset($_GET['id'])) {
+            try {
+                // Lógica para fechar a atualização
+                $documentos = Container::getModel('Editar');
+                $documentos->__set('id', $_GET['id']);
+                $documentos->fecharAtualizacao();
+    
+                // Obtenha os dados atualizados
+                $cod = Container::getModel('Pesquisa');
+                $resultado = $cod->pesquisaindex();
+    
+                // Atualize a resposta para sucesso e inclua os dados
+                $response['status'] = 'success';
+                $response['message'] = 'Dados retornados com sucesso.';
+                $response['data'] = $resultado;
+    
+            } catch (\Exception $e) {
+                // Se ocorrer uma exceção, log e mantenha a resposta como erro
+                error_log('Exceção: ' . $e->getMessage());
+            }
+        } else {
+            error_log('Código GET não recebido.');
+        }
+    
+        // Envie a resposta JSON
+        echo json_encode($response);
     }
+    
+    
+    
+    
 
 
 }

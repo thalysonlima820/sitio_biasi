@@ -18,7 +18,7 @@
             position: relative;
         }
         .tex h1{
-           
+            color: #000;
             font-size: 4em;
         }
         .lista{
@@ -71,7 +71,7 @@
 	<body>
         <br>
         <div class="text-center tex">
-            <h1 >LISTA PESTICIDA</h1>
+            <a href="cadastro_pesticida"><h1 >LISTA PESTICIDA</h1></a>
         </div>
       
 
@@ -85,13 +85,41 @@
                 <h1 class="dias"><?php echo $valor['nome']; ?></h1>
 
                 <a href="/editarpesticida?id=<?php echo $valor['id'] ?>"><ion-icon class="edit" name="create-outline"></ion-icon></a>
-                <a href="/deletar?id=<?php echo htmlspecialchars($valor['id']); ?>&tabela=pesticida">
+                <a data-id="<?php echo $valor['id']; ?>" data-tabela="pesticida"  
+                    class="fechar" href="/deletar?id=<?php echo htmlspecialchars($valor['id']); ?>&tabela=produto">
                     <ion-icon class="delete" name="trash-outline"></ion-icon>
                 </a>
+
             </div>
         </div>
     <?php endforeach; ?>
 
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+$('.fechar').on('click', function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    var tabela = $(this).data("tabela");
+
+    console.log(id);
+
+    $.ajax({
+        type: 'GET',
+        url: '/deletar',
+        data: { id: id, tabela: tabela },  // Combine os parâmetros em um objeto
+        dataType: 'json',
+        success: response => { 
+            console.log('CHEGOU AQUI')
+            location.reload();
+        },
+        error: erro => { console.log(erro); }
+    });
+});
+
+
+    </script>
         
 	</body>
 
